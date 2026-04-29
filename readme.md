@@ -1,10 +1,9 @@
 # logseq-md-convert
 
-A Logseq plugin that converts between Logseq blocks and standard GitHub-flavored Markdown (GFM).
+A Logseq plugin that inserts standard GitHub-flavored Markdown (GFM) as Logseq blocks.
 
 ## Features
 
-- **Logseq → Markdown**: Copy a focused block and all its children as GFM markdown to the clipboard
 - **Markdown → Logseq**: Paste GFM markdown into a panel and insert it as nested Logseq blocks
 
 ## Installation
@@ -23,48 +22,16 @@ Search for **MD Convert** in the Logseq plugin marketplace.
 
 ## Usage
 
-Two buttons appear in the Logseq toolbar:
+One button appears in the Logseq toolbar:
 
 | Button | Direction | What it does |
 |--------|-----------|--------------|
-| **⇢ MD** | Logseq → Markdown | Click into any block, then press this to copy it and all children as markdown to the clipboard |
-| **MD ⇢** | Markdown → Logseq | Opens a panel; paste GFM markdown and click **Insert Blocks** to add it as children of the focused block |
+| **MD** | Markdown → Logseq | Opens a panel; paste GFM markdown and click **Insert Blocks** to add it as children of the focused block |
 
-Both actions are also available as slash commands:
-- `/Copy block as Markdown`
+The action is also available as a slash command:
 - `/Insert Markdown as blocks`
 
 ## Conversion Reference
-
-### Logseq → Markdown
-
-| Logseq | Output |
-|--------|--------|
-| `TODO task` | `- [ ] task` |
-| `DONE task` | `- [x] task` |
-| Nested child blocks | Indented list items (`2` spaces per level) |
-| `# Heading` block at root | `# Heading` (preserved as heading) |
-| `[[page links]]`, `#tags`, `((refs))`, `key:: value` | Preserved as-is |
-
-**Example:**
-
-Logseq blocks:
-```
-- Project notes
-  - TODO Write tests
-  - DONE Set up repo
-  - See [[Design Doc]] for context
-```
-
-Output markdown:
-```markdown
-- Project notes
-  - [ ] Write tests
-  - [x] Set up repo
-  - See [[Design Doc]] for context
-```
-
-### Markdown → Logseq
 
 | Markdown | Logseq block |
 |----------|--------------|

@@ -1,41 +1,7 @@
-import type { BlockEntity } from "@logseq/libs/dist/LSPlugin.user";
-
 export interface IBatchBlock {
   content: string;
   children?: IBatchBlock[];
 }
-
-// ---------------------------------------------------------------------------
-// Logseq → Markdown
-// ---------------------------------------------------------------------------
-
-function convertBlockContent(content: string, depth: number): string {
-  const indent = "  ".repeat(depth);
-  if (depth === 0 && /^#{1,6} /.test(content)) {
-    return content; // preserve heading at root level
-  }
-  if (content.startsWith("TODO ")) {
-    return `${indent}- [ ] ${content.slice(5)}`;
-  }
-  if (content.startsWith("DONE ")) {
-    return `${indent}- [x] ${content.slice(5)}`;
-  }
-  return `${indent}- ${content}`;
-}
-
-export function logseqToMarkdown(block: BlockEntity, depth = 0): string {
-  const lines: string[] = [convertBlockContent(block.content, depth)];
-  for (const child of block.children ?? []) {
-    // children can be BlockUUIDTuple = ['uuid', string] when collapsed
-    if (Array.isArray(child)) continue;
-    lines.push(logseqToMarkdown(child as BlockEntity, depth + 1));
-  }
-  return lines.join("\n");
-}
-
-// ---------------------------------------------------------------------------
-// Markdown → Logseq blocks
-// ---------------------------------------------------------------------------
 
 function measureIndent(line: string): number {
   return line.length - line.trimStart().length;
