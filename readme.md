@@ -6,6 +6,9 @@ A Logseq plugin that inserts standard GitHub-flavored Markdown (GFM) as Logseq b
 
 - **Markdown → Logseq**: Paste GFM markdown into a panel and insert it as nested Logseq blocks
 
+## Screenshot
+![alt text](image.png)
+
 ## Installation
 
 ### From the Marketplace
