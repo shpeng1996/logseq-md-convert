@@ -1,4 +1,5 @@
 import "@logseq/libs";
+import materialSymbolsRoundedUrl from "@fontsource/material-symbols-rounded/files/material-symbols-rounded-latin-400-normal.woff2?url";
 
 import React from "react";
 import * as ReactDOM from "react-dom/client";
@@ -25,23 +26,27 @@ function main() {
   });
 
   logseq.provideStyle(css`
-    .md-convert-btn {
-      font-size: 12px;
-      font-weight: 600;
-      opacity: 0.7;
-      padding: 0 4px;
-      line-height: 32px;
+    @font-face {
+      font-family: "Material Symbols Rounded";
+      font-style: normal;
+      font-display: swap;
+      font-weight: 400;
+      src: url("${materialSymbolsRoundedUrl}") format("woff2");
     }
-    .md-convert-btn:hover {
-      opacity: 1;
+
+    .material-symbols-rounded {
+      font-family: "Material Symbols Rounded";
+      font-feature-settings: "liga";
+      font-size: 20px;
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
     }
   `);
 
   logseq.App.registerUIItem("toolbar", {
     key: "md-convert-insert",
     template: `
-      <a data-on-click="showInsertPanel" title="Insert Markdown as blocks">
-        <div class="md-convert-btn">MD</div>
+      <a data-on-click="showInsertPanel" title="Insert Markdown as blocks" class="button">
+        <span class="material-symbols-rounded">markdown_paste</span>
       </a>
     `,
   });

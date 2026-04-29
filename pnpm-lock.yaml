@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@fontsource/material-symbols-rounded':
+        specifier: ^5.2.43
+        version: 5.2.43
       '@logseq/libs':
         specifier: ^0.0.17
         version: 0.0.17
@@ -324,6 +327,9 @@ packages:
   '@eslint/js@8.57.1':
     resolution: {integrity: sha512-d9zaMRSTIKDLhctzH12MtXvJKSSUhaHcjV+2Z+GK+EEY7XKpP5yR4x+N3TAcHTcu963nIr+TMcCb4DBCYX1z6Q==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+
+  '@fontsource/material-symbols-rounded@5.2.43':
+    resolution: {integrity: sha512-o+1Zo2ESlYlGpfFtaMSNMHBk/Y+kHruoOqHBIIag+r5AXCLfZRIfG+Bw/xGt28CPbTYsueC72hqABAGabu96RA==}
 
   '@humanwhocodes/config-array@0.13.0':
     resolution: {integrity: sha512-DZLEEqFWQFiyK6h5YIeynKx7JlvCYWL0cImfSRXZ9l4Sg2efkFGTuFf6vzXjK1cq6IYkU+Eg/JizXw+TD2vRNw==}
@@ -3036,6 +3042,8 @@ snapshots:
       - supports-color
 
   '@eslint/js@8.57.1': {}
+
+  '@fontsource/material-symbols-rounded@5.2.43': {}
 
   '@humanwhocodes/config-array@0.13.0':
     dependencies:
