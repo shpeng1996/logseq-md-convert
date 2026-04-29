@@ -4,59 +4,89 @@ import React from "react";
 import * as ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
-
-import { logseq as PL } from "../package.json";
+import { logseqToMarkdown } from "./convert";
 
 // @ts-expect-error
 const css = (t, ...args) => String.raw(t, ...args);
 
-const pluginId = PL.id;
-
 function main() {
-  console.info(`#${pluginId}: MAIN`);
   const root = ReactDOM.createRoot(document.getElementById("app")!);
-
   root.render(
     <React.StrictMode>
       <App />
     </React.StrictMode>
   );
 
-  function createModel() {
-    return {
-      show() {
-        logseq.showMainUI();
-      },
-    };
-  }
+  logseq.setMainUIInlineStyle({ zIndex: 11 });
 
-  logseq.provideModel(createModel());
-  logseq.setMainUIInlineStyle({
-    zIndex: 11,
+  logseq.provideModel({
+    async copyBlockAsMarkdown() {
+      const block = await logseq.Editor.getCurrentBlock();
+      if (!block) {
+        await logseq.UI.showMsg("No block focused.", "warning");
+        return;
+      }
+      const fullBlock = await logseq.Editor.getBlock(block.uuid, {
+        includeChildren: true,
+      });
+      if (!fullBlock) return;
+      const md = logseqToMarkdown(fullBlock);
+      await navigator.clipboard.writeText(md);
+      await logseq.UI.showMsg("Copied as Markdown!", "success");
+    },
+
+    showInsertPanel() {
+      logseq.showMainUI();
+    },
   });
 
-  const openIconName = "template-plugin-open";
-
   logseq.provideStyle(css`
-    .${openIconName} {
-      opacity: 0.55;
-      font-size: 20px;
-      margin-top: 4px;
+    .md-convert-btn {
+      font-size: 12px;
+      font-weight: 600;
+      opacity: 0.7;
+      padding: 0 4px;
+      line-height: 32px;
     }
-
-    .${openIconName}:hover {
-      opacity: 0.9;
+    .md-convert-btn:hover {
+      opacity: 1;
     }
   `);
 
   logseq.App.registerUIItem("toolbar", {
-    key: openIconName,
+    key: "md-convert-copy",
     template: `
-    <a data-on-click="show">
-        <div class="${openIconName}">⚙️</div>
-    </a>    
-`,
+      <a data-on-click="copyBlockAsMarkdown" title="Copy block as Markdown">
+        <div class="md-convert-btn">⇢ MD</div>
+      </a>
+    `,
   });
+
+  logseq.App.registerUIItem("toolbar", {
+    key: "md-convert-insert",
+    template: `
+      <a data-on-click="showInsertPanel" title="Insert Markdown as blocks">
+        <div class="md-convert-btn">MD ⇢</div>
+      </a>
+    `,
+  });
+
+  logseq.Editor.registerSlashCommand("Copy block as Markdown", async (e) => {
+    const fullBlock = await logseq.Editor.getBlock(e.uuid, {
+      includeChildren: true,
+    });
+    if (!fullBlock) return;
+    const md = logseqToMarkdown(fullBlock);
+    await navigator.clipboard.writeText(md);
+    await logseq.UI.showMsg("Copied as Markdown!", "success");
+  });
+
+  logseq.Editor.registerSlashCommand(
+    "Insert Markdown as blocks",
+    async (_e) => {
+      logseq.showMainUI();
+    }
+  );
 }
 
 logseq.ready(main).catch(console.error);
