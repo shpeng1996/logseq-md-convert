@@ -50,13 +50,13 @@ function App() {
     >
       <div
         ref={innerRef}
-        className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-4 flex flex-col gap-3"
+        className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg shadow-xl p-4 flex flex-col gap-3"
         style={{ width: 560 }}
       >
         <h2 className="text-base font-semibold">Insert Markdown as Blocks</h2>
 
         <textarea
-          className="w-full h-48 font-mono text-sm border rounded p-2 resize-y dark:bg-gray-700 dark:border-gray-600"
+          className="w-full h-48 font-mono text-sm border rounded p-2 resize-y dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:placeholder-gray-400"
           placeholder="Paste GFM markdown here..."
           value={mdText}
           onChange={(e) => setMdText(e.target.value)}
@@ -69,7 +69,7 @@ function App() {
 
         <div className="flex justify-end gap-2">
           <button
-            className="px-3 py-1 rounded border hover:bg-gray-100 dark:hover:bg-gray-700 text-sm"
+            className="px-3 py-1 rounded border dark:border-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm"
             onClick={() => logseq.hideMainUI()}
           >
             Cancel

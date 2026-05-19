@@ -9,6 +9,10 @@ import "./index.css";
 // @ts-expect-error
 const css = (t, ...args) => String.raw(t, ...args);
 
+function applyTheme(mode: string) {
+  document.documentElement.classList.toggle("dark", mode === "dark");
+}
+
 function main() {
   const root = ReactDOM.createRoot(document.getElementById("app")!);
   root.render(
@@ -16,6 +20,14 @@ function main() {
       <App />
     </React.StrictMode>
   );
+
+  logseq.App.getUserConfigs().then(({ preferredThemeMode }) => {
+    applyTheme(preferredThemeMode);
+  });
+
+  logseq.App.onThemeModeChanged(({ mode }) => {
+    applyTheme(mode);
+  });
 
   logseq.setMainUIInlineStyle({ zIndex: 11 });
 
